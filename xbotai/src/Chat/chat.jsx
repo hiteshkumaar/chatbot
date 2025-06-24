@@ -1,4 +1,6 @@
+// Chat.jsx
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const staticResponses = {
   "Can you explain RESTful APIs?":
@@ -9,6 +11,7 @@ const staticResponses = {
 function Chat() {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
+  const navigate = useNavigate(); // Hook for navigation
 
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem('conversations')) || [];
@@ -40,8 +43,13 @@ function Chat() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
-        <button type="buttons">Send</button>
+        <button type="submit">Send</button>
       </form>
+
+      <button type="button" onClick={() => navigate('/history')}>
+        Past Conversations
+      </button>
+
       <div>
         {messages.map((msg, index) => (
           <div key={index}>
